@@ -38,6 +38,9 @@ public class Bull : MonoBehaviour {
         if (distance > 4.7f)
         {
             dragging = false;
+            attack = true;
+            attackPos = new Vector2(-(mousePos.x), -(mousePos.y));
+            line.positionCount = 1;
         }
 
         if (dragging)

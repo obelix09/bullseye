@@ -6,14 +6,19 @@ public class Matador : MonoBehaviour {
 
     private float angle;
     private Vector2 center;
+    private float[] circles = { 1.45f, 2.4f, 3.35f, 4.3f };
+    private int minSpeed = 1;
+    private int maxSpeed = 5;
 
-    public float speed = 5f;
-    public float radius = 1f;
+    public float speed;
+    public float radius;
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         center = new Vector2(0f, 0f);
-	}
+        speed = Random.Range(minSpeed, maxSpeed);
+        radius = circles[Random.Range(0, circles.Length)];
+    }
 	
 	// Update is called once per frame
 	void Update () {
