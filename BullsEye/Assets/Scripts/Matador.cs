@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Matador : MonoBehaviour {
 
-    private float speed = 5f;
-    private float radius = 1f;
     private float angle;
     private Vector2 center;
+
+    public float speed = 5f;
+    public float radius = 1f;
 
     // Use this for initialization
     void Start () {

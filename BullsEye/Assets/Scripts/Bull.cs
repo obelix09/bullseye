@@ -43,7 +43,7 @@ public class Bull : MonoBehaviour {
         if (dragging)
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);     //if the mouse is dragging we wanna know it's position
-            transform.position = new Vector2(mousePos.x, mousePos.y);           //move the bull where the mouse is;
+            //transform.position = new Vector2(mousePos.x, mousePos.y);           //move the bull where the mouse is;
             line.SetPosition(1, new Vector3(mousePos.x, mousePos.y, -1f));      //create a line between the center and bull position
             distance = Vector2.Distance(centerPos, mousePos);                   //calculate the distance
         }   
@@ -87,9 +87,12 @@ public class Bull : MonoBehaviour {
 
     void OnMouseUp()
     {
-        dragging = false;
-        attack = true;
-        attackPos = new Vector2(-(mousePos.x), -(mousePos.y));
-        line.positionCount = 1;
+        if (!attack && !retrieve)
+        {
+            dragging = false;
+            attack = true;
+            attackPos = new Vector2(-(mousePos.x), -(mousePos.y));
+            line.positionCount = 1;
+        }
     }
 }
