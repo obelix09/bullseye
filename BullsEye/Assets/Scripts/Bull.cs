@@ -9,10 +9,10 @@ public class Bull : MonoBehaviour {
     private Vector2 bullPos;                                                    //bull position
     private Vector2 attackPos;                                                  //attack position, where the bull will go
     private bool dragging;
-    private bool attack;
+    public bool attack;
     private bool retrieve;
     private LineRenderer line;                                                  //line between center and bull
-    private float distance;
+    private float bullDistance;
     public float speed;
 
 
@@ -34,32 +34,23 @@ public class Bull : MonoBehaviour {
 
 // Update is called once per frame
     void Update()
-    {
-        if (distance > 4.7f)
-        {
-            dragging = false;
-            attack = true;
-            attackPos = new Vector2(-(mousePos.x), -(mousePos.y));
-            line.positionCount = 1;
-        }
-
+    { 
         if (dragging)
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);     //if the mouse is dragging we wanna know it's position
             //transform.position = new Vector2(mousePos.x, mousePos.y);           //move the bull where the mouse is;
             line.SetPosition(1, new Vector3(mousePos.x, mousePos.y, -1f));      //create a line between the center and bull position
-            distance = Vector2.Distance(centerPos, mousePos);                   //calculate the distance
         }   
 
         if (attack)
         {
             bullPos = transform.position;
-            float step = speed * Time.deltaTime;                                // calculate distance to move
-            transform.position = Vector2.MoveTowards(bullPos, attackPos, step);
-
+            float step = speed * Time.deltaTime;                                
+            transform.position = Vector2.MoveTowards(bullPos, attackPos, step); //move the bull towards the attack position
+            bullDistance = Vector2.Distance(centerPos, bullPos);                //find out the distance of the bull and center              
         }
 
-        if (bullPos == attackPos && attack)
+        if (bullPos == attackPos && attack || bullDistance > 4.7f) 
         {
             attack = false;
             retrieve = true;
@@ -96,6 +87,15 @@ public class Bull : MonoBehaviour {
             attack = true;
             attackPos = new Vector2(-(mousePos.x), -(mousePos.y));
             line.positionCount = 1;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Matador")
+        {
+            attack = false;
+            retrieve = true;
         }
     }
 }
