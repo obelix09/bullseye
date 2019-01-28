@@ -77,7 +77,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: -0.1, y: 0}
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.2
 --- !u!114 &114515454030774056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -91,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.2
   radius: 4.3
+  score: 0
 --- !u!212 &212218270931150804
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -131,7 +132,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.12, y: 5.12}
+  m_Size: {x: 2.86, y: 2.76}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

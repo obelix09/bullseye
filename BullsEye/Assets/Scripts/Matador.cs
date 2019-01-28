@@ -46,6 +46,9 @@ public class Matador : MonoBehaviour {
         angle += speed * Time.deltaTime;
         var offset = new Vector2((Mathf.Sin(angle)), turn * (Mathf.Cos(angle))) * radius;
         transform.position = center + offset;
+
+        Vector2 direction = new Vector2(0f - transform.position.x, 0f - transform.position.y);
+        transform.up = direction;
     }
 
     private void OnTriggerEnter2D(Collider2D col)

@@ -7,14 +7,15 @@ public class TimeMananger : MonoBehaviour
 {
 
     [SerializeField] Text timeText;
-    [SerializeField] public float mainTimer;
+    [SerializeField] public static float mainTimer;
     private float timer;
     public static bool resetTimer;
-    public static bool canCount = true;
+    public static bool canCount;
 
     // Use this for initialization
     void Start()
     {
+        mainTimer = 10f;
         timeText = GetComponent<Text>();
         timer = mainTimer;
     }
@@ -24,7 +25,6 @@ public class TimeMananger : MonoBehaviour
     {
         if (!canCount)
         {
-            Debug.Log("cant count no moar");
             timer = mainTimer;
             timeText.text = "Time: " + timer.ToString("F");
         }
@@ -41,11 +41,12 @@ public class TimeMananger : MonoBehaviour
             timeText.text = "Time: " + timer.ToString("F");
         }
 
-        else if (timer <= 0.0f)
+        else if (timer <= 0.0f && canCount)
         {
             LevelManager.gameOver = true;
             timeText.text = "Time: 0.00";
             timer = 0.0f;
+            canCount = false;
         }
     }
 }

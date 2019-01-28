@@ -5,79 +5,119 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
 
-    private List<GameObject> matadorList;
-    public GameObject matadorPrefab;
-    private int maxNumber;
-    private int level;
+    private GameObject bull;                                                    //the bull
+    private List<GameObject> matadorList;                                       //list of matadors
+    public GameObject matadorPrefab;                                            //matador prefab
+    public GameObject playAgainButton;
+    private int maxNumber;                                                      //max number of matadors
+    private int level;                                                          //level of game
 
-    public static int deadMatadors;
-    public static bool gameOver;
-    public GameObject panel;
+    public static int deadMatadors;                                             //how many matadors are dead
+    public static bool gameOver;                                                //check if game over
+    public static bool startGame;                                               //check if new game
+
+    public GameObject panel;                                                    
     Text infoText;
     Text levelText;
 
     // Use this for initialization
     void Start()
     {
-        level = 1;
-        maxNumber = 1;
-        matadorList = new List<GameObject>();
-        levelText = GetComponent<Text>();
-        infoText = GameObject.Find("InfoText").GetComponent<Text>();
-        infoText.gameObject.SetActive(false);
+        level = 1;                                                              //start at level 1
+        maxNumber = 1;                                                          //max number starts at 1
+        matadorList = new List<GameObject>();                                   //create a matadorList
+        levelText = GetComponent<Text>();                                       //level display
+        infoText = GameObject.Find("InfoText").GetComponent<Text>();            //info display
+        bull = GameObject.FindGameObjectWithTag("Bull");                        //inisialize the bull
+
+        panel.SetActive(false);                                                 //hide panel
+        infoText.gameObject.SetActive(false);                                   //hide infotext
+        bull.SetActive(false);                                                  //hide bull
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameOver)
+        if(startGame)                                                           //if game has started
         {
-            GameOver();
+            StartGame();
         }
 
-        levelText.text = "Level: " + level;                  
+        if (gameOver)                                                           //if game is over                                                       
+        {
+            GameOver();
+        }                 
 
-        if (matadorList.Count < maxNumber)
+        if (deadMatadors == maxNumber)                                          //if all matadors are dead
+        {
+            NextLevel();                                                        //set the next level
+            FillMatadors();                                                     //create new matadors
+        }
+
+        levelText.text = "Level: " + level;
+    }
+
+    private void StartGame()
+    {
+        ScoreManager.score = 0;                                                 //reset score
+        level = 1;                                                              //reset level 
+        maxNumber = 1;                                                          //reset maxNumber
+        deadMatadors = 0;                                                       //reset number of dead matadors
+
+        StartCoroutine(ShowLevel());                                            //show what level
+
+        //bull.SetActive(true);                                                   //activate the bull
+        matadorList.Clear();                                                    //clear matador list
+        FillMatadors();                                                         //create matadors
+        startGame = false;                                                      //startgame done
+    }
+
+    private void GameOver()
+    {
+        GameObject[] matadors = GameObject.FindGameObjectsWithTag("Matador");   //Destroy all matadors 
+        bull.SetActive(false);                                                  //hide bull                              
+        foreach (GameObject matador in matadors)
+        {
+            Destroy(matador);
+        }
+        playAgainButton.SetActive(true);                                        //activate play again button
+        gameOver = false;                                   
+    }
+
+    private void FillMatadors()
+    {
+        for (int i = 0; i < maxNumber; i++)
         {
             GameObject newMatador = Instantiate(matadorPrefab);
             matadorList.Add(newMatador);
-        }
-
-        if (deadMatadors == maxNumber)
-        {
-            NextLevel();
         }
     }
 
     private void NextLevel()
     {
         level += 1;
-        infoText.text = "Level " + level;
-        StartCoroutine(ShowLevel());
-
         if (maxNumber < 20)
         {
+            TimeMananger.mainTimer += 5f;
             maxNumber += 1;
         }
+        StartCoroutine(ShowLevel());
         deadMatadors = 0;
         matadorList.Clear();
     }
 
-    private void GameOver()
-    {
-        infoText.text = "GAME OVER";
-        infoText.gameObject.SetActive(true);
-        panel.SetActive(true);
-    }
-
     private IEnumerator ShowLevel()
     {
+        bull.SetActive(false);
+        bull.transform.position = new Vector2(0f, 0f);
+        infoText.text = "Level " + level;
         infoText.gameObject.SetActive(true);
         panel.SetActive(true);
         TimeMananger.canCount = false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         TimeMananger.resetTimer = true;
         infoText.gameObject.SetActive(false);
         panel.SetActive(false);
+        bull.SetActive(true);
     }
 }

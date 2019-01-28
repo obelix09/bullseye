@@ -8,12 +8,12 @@ public class Bull : MonoBehaviour {
     private Vector2 mousePos;                                                   //mouse position
     private Vector2 bullPos;                                                    //bull position
     private Vector2 attackPos;                                                  //attack position, where the bull will go
-    private bool dragging;
-    public bool attack;
-    private bool retrieve;
     private LineRenderer line;                                                  //line between center and bull
-    private float bullDistance;
-    public float speed;
+    private float bullDistance;                                                 //distance from center to bull
+    private bool dragging;                                                      //can drag a line or not
+    public bool attack;                                                         //bull attacking or not
+    private bool retrieve;                                                      //bull retrieving or not
+    public float speed;                                                         //speed of the bull
 
 
 
@@ -22,11 +22,12 @@ public class Bull : MonoBehaviour {
     {
         centerPos = transform.position;                                         //Save the starting position of the bull (center)
         line = this.gameObject.AddComponent<LineRenderer>();                    // Add a Line Renderer to the GameObject
-        line.startWidth = 0.1f;                                                       // Set the width of the line
+        line.startWidth = 0.1f;                                                 // Set the width of the line
         line.endWidth = 0.1f;
-        line.material = new Material(Shader.Find("Particles/Additive"));
-        line.startColor = Color.blue;
-        line.endColor = Color.blue;
+        //line.material = new Material(Shader.Find("Particles/Additive"));
+        //line.startColor = Color.blue;
+        //line.endColor = Color.blue;
+        line.material.color = Color.blue;
         line.positionCount = 2;
         line.SetPosition(0, new Vector3(centerPos.x, centerPos.y, -1f));        // Set the begginning of the line
         line.useWorldSpace = true;
@@ -35,67 +36,67 @@ public class Bull : MonoBehaviour {
 // Update is called once per frame
     void Update()
     { 
-        if (dragging)
+        if (dragging)                                                           
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);     //if the mouse is dragging we wanna know it's position
-            //transform.position = new Vector2(mousePos.x, mousePos.y);           //move the bull where the mouse is;
-            line.SetPosition(1, new Vector3(mousePos.x, mousePos.y, -1f));      //create a line between the center and bull position
-        }   
+            line.SetPosition(1, new Vector3(mousePos.x, mousePos.y, -1f));      //create a line between the center and mouse position
+            //transform.position = new Vector2(mousePos.x, mousePos.y);         //move the bull where the mouse is;
+        }
 
         if (attack)
         {
-            bullPos = transform.position;
-            float step = speed * Time.deltaTime;                                
+            bullPos = transform.position;                                       //get bulls position
+            float step = speed * Time.deltaTime;                                //have a constant speed
             transform.position = Vector2.MoveTowards(bullPos, attackPos, step); //move the bull towards the attack position
             bullDistance = Vector2.Distance(centerPos, bullPos);                //find out the distance of the bull and center              
         }
 
-        if (bullPos == attackPos && attack || bullDistance > 4.7f) 
-        {
-            attack = false;
-            retrieve = true;
+        if (bullPos == attackPos && attack || bullDistance > 4.7f)              //if the bull is at same location as attack position    
+        {                                                                       // or it gone further than 4.7f from center
+            attack = false;                                                     //bull should not attack anymore
+            retrieve = true;                                                    //begin retreiving
         }
 
-        if (retrieve)
+        if (retrieve)                                               
         { 
-            bullPos = transform.position;
-            float step = speed * Time.deltaTime;                                // calculate distance to move
-            transform.position = Vector2.MoveTowards(bullPos, centerPos, step);
+            bullPos = transform.position;                                       //get bull location
+            float step = speed * Time.deltaTime;                                //constant speed
+            transform.position = Vector2.MoveTowards(bullPos, centerPos, step); //move the bull towards the center again
         }
 
-        if (bullPos == centerPos && !attack)
+        if (bullPos == centerPos && !attack)                                    //if bull is in the center and not attacking
         {
-            retrieve = false;
-            line.positionCount = 2;
+            retrieve = false;                                                   //he's done retrieving
+            line.positionCount = 2;                                             //and we can draw a new line to attack again    
 
-        }
-    }
-
-    void OnMouseDown()
-    {
-        if (!attack && !retrieve)
-        {
-            dragging = true;
         }
     }
 
-    void OnMouseUp()
-    {
-        if (!attack && !retrieve)
+    void OnMouseDown()                                                          //when bull is mouse clicked
+    {   
+        if (!attack && !retrieve)                                               //and bull is not attacking nor retrieving
         {
-            dragging = false;
-            attack = true;
-            attackPos = new Vector2(-(mousePos.x), -(mousePos.y));
-            line.positionCount = 1;
+            dragging = true;                                                    //we can drag a line
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    void OnMouseUp()                                                            //when mouse button has gone up
     {
-        if (col.gameObject.tag == "Matador")
+        if (!attack && !retrieve)                                               //and bull is not attacking nor retrieving
         {
-            attack = false;
-            retrieve = true;
+            dragging = false;                                                   //we stop dragging
+            attack = true;                                                      //bull starts to attack
+            attackPos = new Vector2(-(mousePos.x), -(mousePos.y));              //create the attack position in opposite direction of mouseposition
+            line.positionCount = 1;                                             //erase the line
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)                               
+    {
+        if (col.gameObject.tag == "Matador")                                    //when bull hits a matador
+        {
+            attack = false;                                                     //bull stops attacking
+            retrieve = true;                                                    //and retrieves back
         }
     }
 }
