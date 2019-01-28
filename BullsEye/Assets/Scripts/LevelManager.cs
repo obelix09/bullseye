@@ -11,7 +11,10 @@ public class LevelManager : MonoBehaviour {
     private int level;
 
     public static int deadMatadors;
-    Text text;
+    public static bool gameOver;
+    public GameObject panel;
+    Text infoText;
+    Text levelText;
 
     // Use this for initialization
     void Start()
@@ -19,13 +22,20 @@ public class LevelManager : MonoBehaviour {
         level = 1;
         maxNumber = 1;
         matadorList = new List<GameObject>();
-        text = GetComponent<Text>();
+        levelText = GetComponent<Text>();
+        infoText = GameObject.Find("InfoText").GetComponent<Text>();
+        infoText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        text.text = "Level: " + level;                  
+        if (gameOver)
+        {
+            GameOver();
+        }
+
+        levelText.text = "Level: " + level;                  
 
         if (matadorList.Count < maxNumber)
         {
@@ -35,13 +45,39 @@ public class LevelManager : MonoBehaviour {
 
         if (deadMatadors == maxNumber)
         {
-            level += 1;
-            if (maxNumber < 20)
-            {
-                maxNumber += 1;
-            }
-            deadMatadors = 0;
-            matadorList.Clear();
+            NextLevel();
         }
+    }
+
+    private void NextLevel()
+    {
+        level += 1;
+        infoText.text = "Level " + level;
+        StartCoroutine(ShowLevel());
+
+        if (maxNumber < 20)
+        {
+            maxNumber += 1;
+        }
+        deadMatadors = 0;
+        matadorList.Clear();
+    }
+
+    private void GameOver()
+    {
+        infoText.text = "GAME OVER";
+        infoText.gameObject.SetActive(true);
+        panel.SetActive(true);
+    }
+
+    private IEnumerator ShowLevel()
+    {
+        infoText.gameObject.SetActive(true);
+        panel.SetActive(true);
+        TimeMananger.canCount = false;
+        yield return new WaitForSeconds(3f);
+        TimeMananger.resetTimer = true;
+        infoText.gameObject.SetActive(false);
+        panel.SetActive(false);
     }
 }
