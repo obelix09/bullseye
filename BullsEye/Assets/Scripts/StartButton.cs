@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class StartButton : MonoBehaviour {
 
-    private bool canClick;
 
 	// Use this for initialization
 	void Start () {
@@ -15,21 +14,9 @@ public class StartButton : MonoBehaviour {
 	void Update () {
 		
 	}
-
-    private void OnMouseDown()
-    {
-        canClick = true;
-    }
-
-    private void OnMouseExit()
-    {
-        canClick = false;
-    }
-
     private void OnMouseUp()
     {
         LevelManager.startGame = true;                                          //start the game
         gameObject.SetActive(false);                                            //deactivate the button
-        canClick = false;
     }                                                           
 }

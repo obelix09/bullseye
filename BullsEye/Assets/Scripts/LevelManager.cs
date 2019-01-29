@@ -7,9 +7,12 @@ public class LevelManager : MonoBehaviour {
 
     private GameObject bull;                                                    //the bull
     private List<GameObject> matadorList;                                       //list of matadors
+    private List<GameObject> picadorList;                                       //list of picadors
     public GameObject matadorPrefab;                                            //matador prefab
-    public GameObject playAgainButton;
-    private int maxNumber;                                                      //max number of matadors
+    public GameObject picadorPrefab;                                            //picador prefab
+    public GameObject playAgainButton;                                          //play again button
+    private int maxMatadors;                                                    //max number of matadors
+    private int maxPicadors;
     private int level;                                                          //level of game
 
     public static int deadMatadors;                                             //how many matadors are dead
@@ -24,8 +27,10 @@ public class LevelManager : MonoBehaviour {
     void Start()
     {
         level = 1;                                                              //start at level 1
-        maxNumber = 1;                                                          //max number starts at 1
-        matadorList = new List<GameObject>();                                   //create a matadorList
+        maxMatadors = 1;                                                        //max matadors starts at 1
+        maxPicadors = 0;                                                        //max picadors starts at 0
+        matadorList = new List<GameObject>();                                   //create a matador list
+        picadorList = new List<GameObject>();                                   //create a picador list 
         levelText = GetComponent<Text>();                                       //level display
         infoText = GameObject.Find("InfoText").GetComponent<Text>();            //info display
         bull = GameObject.FindGameObjectWithTag("Bull");                        //inisialize the bull
@@ -48,10 +53,11 @@ public class LevelManager : MonoBehaviour {
             GameOver();
         }                 
 
-        if (deadMatadors == maxNumber)                                          //if all matadors are dead
+        if (deadMatadors == maxMatadors)                                          //if all matadors are dead
         {
             NextLevel();                                                        //set the next level
             FillMatadors();                                                     //create new matadors
+            FillPicadors();
         }
 
         levelText.text = "Level: " + level;
@@ -61,13 +67,16 @@ public class LevelManager : MonoBehaviour {
     {
         ScoreManager.score = 0;                                                 //reset score
         level = 1;                                                              //reset level 
-        maxNumber = 1;                                                          //reset maxNumber
+        maxMatadors = 1;                                                        //reset maxNumber
+        maxPicadors = 0;
         deadMatadors = 0;                                                       //reset number of dead matadors
         TimeMananger.mainTimer = 10f;                                           //reset timer
         TimeMananger.timeFinished = false;
         StartCoroutine(ShowLevel());                                            //show what level
         matadorList.Clear();                                                    //clear matador list
+        picadorList.Clear();
         FillMatadors();                                                         //create matadors
+        FillPicadors();
         startGame = false;                                                      //startgame done
     }
 
@@ -79,30 +88,57 @@ public class LevelManager : MonoBehaviour {
         {
             Destroy(matador);
         }
+        GameObject[] picadors = GameObject.FindGameObjectsWithTag("Picador");   //get all picadors
+        foreach (GameObject picador in picadors)                                //Destroy all picadors
+        {
+            Destroy(picador);
+        }
         playAgainButton.SetActive(true);                                        //activate play again button
         gameOver = false;                                                       //gameOver not anymore
     }
 
+
+    private void NextLevel()
+    {
+        level += 1;
+        Debug.Log(level % 2);
+        if (maxMatadors < 10)
+        {
+            TimeMananger.mainTimer += 5f;
+            maxMatadors++;
+        }
+        if (maxPicadors < 8 && (level % 2 == 0))
+        {
+            maxPicadors++;
+        }
+
+        StartCoroutine(ShowLevel());
+        deadMatadors = 0;
+        matadorList.Clear();
+        picadorList.Clear();
+        GameObject[] picadors = GameObject.FindGameObjectsWithTag("Picador");   //get all picadors
+        foreach (GameObject picador in picadors)                                //Destroy all picadors
+        {
+            Destroy(picador);
+        }
+    }
+
     private void FillMatadors()
     {
-        for (int i = 0; i < maxNumber; i++)
+        for (int i = 0; i < maxMatadors; i++)
         {
             GameObject newMatador = Instantiate(matadorPrefab);
             matadorList.Add(newMatador);
         }
     }
 
-    private void NextLevel()
+    private void FillPicadors()
     {
-        level += 1;
-        if (maxNumber <= 10)
+        for (int i = 0; i < maxPicadors; i++)
         {
-            TimeMananger.mainTimer += 5f;
-            maxNumber += 1;
+            GameObject newPicador = Instantiate(picadorPrefab);
+            picadorList.Add(newPicador);
         }
-        StartCoroutine(ShowLevel());
-        deadMatadors = 0;
-        matadorList.Clear();
     }
 
     private IEnumerator ShowLevel()

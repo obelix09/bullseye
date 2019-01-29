@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\Bull.cs" />
     <Compile Include="Assets\Scripts\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Matador.cs" />
+    <Compile Include="Assets\Scripts\Pikador.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\StartButton.cs" />
     <Compile Include="Assets\Scripts\TimeMananger.cs" />
