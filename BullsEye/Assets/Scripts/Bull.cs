@@ -9,7 +9,7 @@ public class Bull : MonoBehaviour
     private Vector2 mousePos;                                                   //mouse position
     private Vector2 bullPos;                                                    //bull position
     private Vector2 attackPos;                                                  //attack position, where the bull will go
-    private LineRenderer line;                                                  //line between center and bull
+    public LineRenderer line;                                                   //line between center and bull
     private float bullDistance;                                                 //distance from center to bull
     private bool dragging;                                                      //can drag a line or not
     public bool attack;                                                         //bull attacking or not
@@ -24,10 +24,13 @@ public class Bull : MonoBehaviour
     void Start()
     {
         centerPos = transform.position;                                         //Save the starting position of the bull (center)
-        line = this.gameObject.AddComponent<LineRenderer>();                    // Add a Line Renderer to the GameObject
+        //line = this.gameObject.AddComponent<LineRenderer>();                  // Add a Line Renderer to the GameObject
         line.startWidth = 0.1f;                                                 // Set the width of the line
         line.endWidth = 0.1f;
-        line.material.color = Color.blue;
+        //line.material = new Material(Shader.Find("Particles/Additive"));
+        //line.startColor = Color.red;
+        //line.endColor = Color.red;
+        //line.material.color = Color.blue;
         line.positionCount = 2;
         line.SetPosition(0, new Vector3(centerPos.x, centerPos.y, -0.5f));        // Set the begginning of the line
         line.useWorldSpace = true;
