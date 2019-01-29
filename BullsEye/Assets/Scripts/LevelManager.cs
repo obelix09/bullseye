@@ -63,10 +63,9 @@ public class LevelManager : MonoBehaviour {
         level = 1;                                                              //reset level 
         maxNumber = 1;                                                          //reset maxNumber
         deadMatadors = 0;                                                       //reset number of dead matadors
-
+        TimeMananger.mainTimer = 10f;                                           //reset timer
+        TimeMananger.timeFinished = false;
         StartCoroutine(ShowLevel());                                            //show what level
-
-        //bull.SetActive(true);                                                   //activate the bull
         matadorList.Clear();                                                    //clear matador list
         FillMatadors();                                                         //create matadors
         startGame = false;                                                      //startgame done
@@ -74,14 +73,14 @@ public class LevelManager : MonoBehaviour {
 
     private void GameOver()
     {
-        GameObject[] matadors = GameObject.FindGameObjectsWithTag("Matador");   //Destroy all matadors 
-        bull.SetActive(false);                                                  //hide bull                              
-        foreach (GameObject matador in matadors)
+        bull.SetActive(false);                                                  //hide bull    
+        GameObject[] matadors = GameObject.FindGameObjectsWithTag("Matador");   //get all matadors
+        foreach (GameObject matador in matadors)                                //Destroy all matadors 
         {
             Destroy(matador);
         }
         playAgainButton.SetActive(true);                                        //activate play again button
-        gameOver = false;                                   
+        gameOver = false;                                                       //gameOver not anymore
     }
 
     private void FillMatadors()
@@ -96,7 +95,7 @@ public class LevelManager : MonoBehaviour {
     private void NextLevel()
     {
         level += 1;
-        if (maxNumber < 20)
+        if (maxNumber <= 10)
         {
             TimeMananger.mainTimer += 5f;
             maxNumber += 1;
@@ -113,9 +112,9 @@ public class LevelManager : MonoBehaviour {
         infoText.text = "Level " + level;
         infoText.gameObject.SetActive(true);
         panel.SetActive(true);
-        TimeMananger.canCount = false;
-        yield return new WaitForSeconds(2f);
-        TimeMananger.resetTimer = true;
+        TimeMananger.canCount = false;                                          //pause the count
+        yield return new WaitForSeconds(2f);                                    //show level for 2sek
+        TimeMananger.resetTimer = true;                                         //reset the timer
         infoText.gameObject.SetActive(false);
         panel.SetActive(false);
         bull.SetActive(true);

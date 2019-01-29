@@ -16,7 +16,6 @@ public class Bull : MonoBehaviour {
     public float speed;                                                         //speed of the bull
 
 
-
     // Use this for initialization
     void Start () 
     {
@@ -24,12 +23,9 @@ public class Bull : MonoBehaviour {
         line = this.gameObject.AddComponent<LineRenderer>();                    // Add a Line Renderer to the GameObject
         line.startWidth = 0.1f;                                                 // Set the width of the line
         line.endWidth = 0.1f;
-        //line.material = new Material(Shader.Find("Particles/Additive"));
-        //line.startColor = Color.blue;
-        //line.endColor = Color.blue;
         line.material.color = Color.blue;
         line.positionCount = 2;
-        line.SetPosition(0, new Vector3(centerPos.x, centerPos.y, -1f));        // Set the begginning of the line
+        line.SetPosition(0, new Vector3(centerPos.x, centerPos.y, -0.5f));        // Set the begginning of the line
         line.useWorldSpace = true;
     }
 
@@ -39,7 +35,7 @@ public class Bull : MonoBehaviour {
         if (dragging)                                                           
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);     //if the mouse is dragging we wanna know it's position
-            line.SetPosition(1, new Vector3(mousePos.x, mousePos.y, -1f));      //create a line between the center and mouse position
+            line.SetPosition(1, new Vector3(mousePos.x, mousePos.y, -0.5f));      //create a line between the center and mouse position
             //transform.position = new Vector2(mousePos.x, mousePos.y);         //move the bull where the mouse is;
         }
 
