@@ -1,12 +1,13 @@
 ﻿<Properties StartupConfiguration="{A6C1AC0E-C75A-9343-758B-CFFF03F25C20}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Bull.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/QuitButton.cs">
     <Files>
       <File FileName="Assets/Scripts/StartButton.cs" Line="6" Column="1" />
-      <File FileName="Assets/Scripts/Bull.cs" Line="30" Column="9" />
-      <File FileName="Assets/Scripts/LevelManager.cs" Line="123" Column="10" />
+      <File FileName="Assets/Scripts/Bull.cs" Line="12" Column="81" />
+      <File FileName="Assets/Scripts/LevelManager.cs" Line="110" Column="26" />
       <File FileName="Assets/Scripts/Pikador.cs" Line="16" Column="17" />
       <File FileName="Assets/Scripts/ScoreManager.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Matador.cs" Line="74" Column="6" />
+      <File FileName="Assets/Scripts/QuitButton.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour {
     public GameObject matadorPrefab;                                            //matador prefab
     public GameObject picadorPrefab;                                            //picador prefab
     public GameObject playAgainButton;                                          //play again button
+    public GameObject quitButton;                                               //quit button
     private int maxMatadors;                                                    //max number of matadors
     private int maxPicadors;
     private int level;                                                          //level of game
@@ -65,6 +66,7 @@ public class LevelManager : MonoBehaviour {
 
     private void StartGame()
     {
+        quitButton.SetActive(false);                                            //hide quit button
         ScoreManager.score = 0;                                                 //reset score
         level = 1;                                                              //reset level 
         maxMatadors = 1;                                                        //reset maxNumber
@@ -94,6 +96,7 @@ public class LevelManager : MonoBehaviour {
             Destroy(picador);
         }
         playAgainButton.SetActive(true);                                        //activate play again button
+        quitButton.SetActive(true);
         gameOver = false;                                                       //gameOver not anymore
     }
 

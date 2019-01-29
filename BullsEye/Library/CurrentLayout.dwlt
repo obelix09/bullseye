@@ -393,14 +393,14 @@ MonoBehaviour:
     height: 279
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 1
-  lastFramingTime: 57865.84129405022
+  lastFramingTime: 273.0943239927292
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 144.48001, y: 341.20502, z: 0}
+    m_Target: {x: 0, y: 0, z: 0.25}
     speed: 2
-    m_Value: {x: 144.48001, y: 341.20502, z: 0}
+    m_Value: {x: 0, y: 0, z: 0.25}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -432,9 +432,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 336.54538
+    m_Target: 5.0796423
     speed: 2
-    m_Value: 336.54538
+    m_Value: 5.0796423
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -561,23 +561,23 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 640a0000
+    m_SelectedIDs: 64010000
     m_LastClickedID: 0
-    m_ExpandedIDs: e4d2ffff62d3ffffa6d4ffffe4fbffff00000000
+    m_ExpandedIDs: 083bffffba3bffff123dffffe4fbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: bull
+      m_OriginalName: bull
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 3190
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 10}
     m_SearchString: 
@@ -636,7 +636,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: ee240000
     m_LastClickedID: 9454
-    m_ExpandedIDs: 0000000038090000de0a0000e40a00003e0b0000a20b0000ae0b0000
+    m_ExpandedIDs: 000000003809000072090000de0a0000e40a00003e0b0000a20b0000ae0b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -661,7 +661,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 100}
+    scrollPos: {x: 0, y: 116}
     m_SelectedIDs: 
     m_LastClickedID: 0
     m_ExpandedIDs: ffffffff000000003809000072090000de0a0000e40a00003e0b0000a20b0000ae0b0000
