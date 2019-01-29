@@ -104,7 +104,6 @@ public class LevelManager : MonoBehaviour {
     private void NextLevel()
     {
         level += 1;
-        Debug.Log(level % 2);
         if (maxMatadors < 10)
         {
             TimeMananger.mainTimer += 5f;

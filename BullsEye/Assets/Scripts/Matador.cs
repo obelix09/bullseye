@@ -15,16 +15,17 @@ public class Matador : MonoBehaviour {
     public float radius;
     public int score;
 
-    public AudioSource audioSource;
+    private AudioSource audioSource;
     public AudioClip[] audioClips;
 
 
-    // Use this for initialization
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        audioSource.clip = audioClips[Random.Range(0, audioClips.Length)];
+        int range = Random.Range(0, audioClips.Length);
+        audioSource.clip = audioClips[range];
     }
+
     void Start() {
         center = new Vector2(0f, 0f);
         speed = Random.Range(minSpeed, maxSpeed);
@@ -66,9 +67,10 @@ public class Matador : MonoBehaviour {
             if (col.gameObject.GetComponent<Bull>().attack)
             {
                 audioSource.Play();
+                gameObject.GetComponent<SpriteRenderer>().sortingOrder = 0;
+                Destroy(gameObject, audioSource.clip.length);
                 ScoreManager.score += score;
                 LevelManager.deadMatadors += 1;
-                Destroy(gameObject);
             }
         }
     }
