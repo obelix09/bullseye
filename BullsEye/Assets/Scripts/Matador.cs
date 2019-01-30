@@ -8,8 +8,7 @@ public class Matador : MonoBehaviour {
     private Vector2 center;
     private float[] circles = { 1.45f, 2.4f, 3.35f, 4.3f };
     private float[] circleTurn = { -1f, 1f };
-    private float minSpeed = 1f;
-    private float maxSpeed = 5f;
+    private float[] speeds = { 1f, 1.5f, 2f, 2.5f, 3f, 3.5f, 4f, 4.5f, 5f };
     private float turn;
     public float speed;
     public float radius;
@@ -28,7 +27,7 @@ public class Matador : MonoBehaviour {
 
     void Start() {
         center = new Vector2(0f, 0f);
-        speed = Random.Range(minSpeed, maxSpeed);
+        speed = speeds[Random.Range(0, speeds.Length)];
         radius = circles[Random.Range(0, circles.Length)];
         turn = circleTurn[Random.Range(0, circleTurn.Length)];
 
@@ -67,7 +66,7 @@ public class Matador : MonoBehaviour {
             if (col.gameObject.GetComponent<Bull>().attack)
             {
                 audioSource.Play();
-                gameObject.GetComponent<SpriteRenderer>().sortingOrder = 0;
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 Destroy(gameObject, audioSource.clip.length);
                 ScoreManager.score += score;
                 LevelManager.deadMatadors += 1;

@@ -8,8 +8,7 @@ public class Pikador : MonoBehaviour {
     private Vector2 center;
     private float[] circles = { 1.45f, 2.4f, 3.35f, 4.3f };
     private float[] circleTurn = { -1f, 1f };
-    private float minSpeed = 1f;
-    private float maxSpeed = 5f;
+    private float[] speeds = { 0.8f, 1.3f, 1.8f, 2.3f, 2.8f, 3.2f, 3.8f, 4.2f, 4.8f };
     private float turn;
     public float speed;
     public float radius;
@@ -26,7 +25,7 @@ public class Pikador : MonoBehaviour {
     void Start()
     {
         center = new Vector2(0f, 0f);
-        speed = Random.Range(minSpeed, maxSpeed);
+        speed = speeds[Random.Range(0, speeds.Length)];
         radius = circles[Random.Range(0, circles.Length)];
         turn = circleTurn[Random.Range(0, circleTurn.Length)];
 
